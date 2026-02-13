@@ -109,16 +109,25 @@ const secretPassword = "1402"; // Change ici ton mot de passe
 function checkPassword() {
   const input = document.getElementById("passwordInput").value;
   if(input === secretPassword){
-    document.getElementById('scene0').classList.remove('active');
+    const currentEl = document.getElementById('scene0');
+    currentEl.classList.remove('active');
+
     currentScene = 1;
-    document.getElementById('scene'+currentScene).classList.add('active');
-    startTypewriter(currentScene);
+    const nextEl = document.getElementById('scene'+currentScene);
+    nextEl.classList.add('active');
+
+    // Petit timeout pour laisser le navigateur appliquer la classe active
+    setTimeout(() => {
+      startTypewriter(currentScene);
+    }, 50);
+    
   } else {
     const error = document.getElementById("wrongPass");
     error.style.opacity = 1;
     setTimeout(()=>{error.style.opacity=0;},2000);
   }
 }
+
 
 function nextScene(){
   document.getElementById('scene'+currentScene).classList.remove('active');
@@ -162,3 +171,4 @@ createParticles();
 
 </body>
 </html>
+
