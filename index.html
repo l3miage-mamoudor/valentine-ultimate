@@ -8,148 +8,206 @@
 <style>
 body{
     margin:0;
-    background:#0a0a0a;
+    background:black;
     color:white;
-    font-family:monospace;
-    text-align:center;
+    font-family: 'Courier New', monospace;
     overflow:hidden;
+    text-align:center;
+}
+
+/* Fond animé */
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle at center, #1a0000 0%, #000 70%);
+    animation:pulse 8s infinite alternate;
+    z-index:-1;
+}
+
+@keyframes pulse{
+    from{opacity:0.8;}
+    to{opacity:1;}
 }
 
 .scene{
     display:none;
     min-height:100vh;
-    padding:15vh 20px 0 20px;
+    padding-top:18vh;
+    opacity:0;
+    transition:opacity 1.5s ease;
 }
 
 .active{
     display:block;
+    opacity:1;
 }
 
 button{
-    margin-top:30px;
-    padding:12px 28px;
-    background:#e63946;
-    color:white;
+    margin-top:50px;
+    padding:14px 36px;
+    background:#ff2e4d;
     border:none;
-    cursor:pointer;
+    color:white;
     font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.red{ color:#e63946; }
-.big{ font-size:28px; }
-.final{ font-size:30px; line-height:1.6; }
-.heart{ font-size:40px; color:#e63946; }
+button:hover{
+    background:#ff4d6d;
+    transform:scale(1.05);
+}
+
+.big{
+    font-size:38px;
+    line-height:1.9;
+}
+
+.huge{
+    font-size:90px;
+    letter-spacing:15px;
+    color:#ff2e4d;
+    animation:slowZoom 4s ease forwards;
+}
+
+@keyframes slowZoom{
+    from{transform:scale(0.8); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+.final{
+    font-size:46px;
+    line-height:2.2;
+}
+
+.word{
+    font-size:80px;
+    letter-spacing:8px;
+    margin-top:40px;
+    animation:fadeIn 3s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.heart{
+    font-size:70px;
+    color:#ff2e4d;
+    margin-top:30px;
+    animation:beat 1.2s infinite;
+}
+
+@keyframes beat{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.25);}
+    100%{transform:scale(1);}
+}
+
+input{
+    padding:10px;
+    font-size:16px;
+}
 </style>
 </head>
 
 <body>
 
+<div class="background"></div>
+
 <!-- SCENE 0 -->
 <div class="scene active" id="scene0">
     <h2>Bienvenue…</h2>
-    <p>Pour accéder à ton expérience spéciale Saint-Valentin,</p>
-    <p>entre le mot de passe secret.</p>
+    <p>Entre le mot de passe secret.</p>
     <br>
     <input type="password" id="password">
     <br>
-    <button onclick="checkPassword()">Valider</button>
-    <p style="margin-top:20px;color:#aaa;">
-        Indice : le mot de passe est une combinaison de ton prénom et du mien… 8 lettres.
-    </p>
+    <button onclick="checkPassword()">Entrer</button>
     <p id="error" style="color:red;"></p>
 </div>
 
 <!-- SCENE 1 -->
 <div class="scene" id="scene1">
     <pre id="terminal"></pre>
-    <button id="btn1" style="display:none;" onclick="nextScene()">CONTINUER</button>
+    <button id="btn1" style="display:none;" onclick="nextScene()">Continuer</button>
 </div>
 
 <!-- SCENE 2 -->
 <div class="scene" id="scene2">
-    <h2>Match détecté :</h2>
-    <h1 class="red big">ISSA</h1>
-    <button onclick="nextScene()">CONTINUER</button>
+    <div style="opacity:0.6;">Résultat unique.</div>
+    <div class="huge">ISSA</div>
+    <button onclick="nextScene()">...</button>
 </div>
 
 <!-- SCENE 3 -->
 <div class="scene" id="scene3">
-    <p class="big">
-        Ce programme n’a pas été développé pour tout le monde.
+    <div class="big">
+        Tu n’étais pas censé être<br>
+        juste une rencontre.
         <br><br>
-        Il a été créé pour une seule personne.
-        <br><br>
-        <span class="red">Toi.</span>
-    </p>
-    <button onclick="nextScene()">CONTINUER</button>
+        Tu es devenu<br>
+        une évidence.
+    </div>
+    <button onclick="nextScene()">Continuer</button>
 </div>
 
 <!-- SCENE 4 -->
 <div class="scene" id="scene4">
-    <p class="big">
-        Parmi des milliards d’humains…  
-        mon cœur t’a reconnu.
-    </p>
-    <p>
-        Pas par hasard.  
-        Pas par erreur.  
-        Mais comme une évidence.
-    </p>
-    <button onclick="nextScene()">CONTINUER</button>
+    <div class="big">
+        Parmi des milliards…<br><br>
+        mon cœur n’a jamais hésité.
+    </div>
+    <button onclick="nextScene()">Continuer</button>
 </div>
 
 <!-- SCENE 5 -->
 <div class="scene" id="scene5">
-    <p class="big">
-        Même quand les jours sont lourds…  
-        je te regarde toujours avec les mêmes yeux.
-    </p>
-    <button onclick="nextScene()">CONTINUER</button>
+    <div class="big">
+        Même quand les jours sont lourds,<br>
+        même quand le monde est bruyant…<br><br>
+        je te regarde toujours<br>
+        avec douceur.
+    </div>
+    <button onclick="nextScene()">Continuer</button>
 </div>
 
 <!-- SCENE 6 -->
 <div class="scene" id="scene6">
 <pre class="big">
 if (life.getHard()) {
-    remember("You are loved.");
+    stay();
 }
 
 const myChoice = "You";
 let forever = true;
 </pre>
-    <button onclick="nextScene()">CONTINUER</button>
+    <div class="word">Toujours.</div>
+    <button onclick="nextScene()">...</button>
 </div>
 
 <!-- SCENE 7 -->
 <div class="scene" id="scene7">
-    <p class="big">
-        Ce n’est pas juste la Saint-Valentin.
-        <br><br>
-        C’est le jour où je te rappelle que tu comptes.
-        <br>
-        Que tu es devenu essentiel.
-        <br>
-        Et que je t’aime.
-        <br><br>
-        Beaucoup. Beaucoup. Beaucoup.
-    </p>
-    <div class="heart">❤ ❤ ❤</div>
-    <button onclick="nextScene()">CONTINUER</button>
+    <div class="big">
+        Ce n’est pas juste la Saint-Valentin.<br><br>
+        C’est le jour où je te rappelle<br>
+        que tu comptes.<br><br>
+        Que tu es devenu essentiel.<br><br>
+        Et que je t’aime.<br><br>
+        Vraiment.
+    </div>
+    <button onclick="nextScene()">...</button>
 </div>
 
 <!-- SCENE 8 -->
 <div class="scene" id="scene8">
     <div class="final">
-        Si l’amour était un algorithme,
-        tu serais la seule valeur non remplaçable.
-        <br><br>
-        Peu importe les mises à jour de la vie,
-        tu resteras ma version préférée.
-        <br><br>
-        Joyeuse Saint-Valentin 🤍
-        <br><br>
-        Connection stable. Always.
+        Si je devais recommencer mille fois…<br><br>
+        je te choisirais encore.
     </div>
+    <div class="word">Toujours.</div>
+    <div class="heart">❤</div>
 </div>
 
 <script>
@@ -184,11 +242,7 @@ function startTypewriter(){
         "> Synchronizing heartbeat...",
         "> Accessing heart memory...",
         "> Scanning 8 042 311 447 humans...",
-        "> Searching for:",
-        ">   - rare kindness",
-        ">   - quiet strength",
-        ">   - softness behind confidence",
-        ">   - the one who feels like home...",
+        "> Searching for the one who feels like home...",
         "> Filtering noise...",
         "> Eliminating distractions...",
         "> Cross-referencing soul data...",
@@ -209,16 +263,10 @@ function startTypewriter(){
             if(charIndex < lines[lineIndex].length){
                 terminal.innerHTML += lines[lineIndex][charIndex];
                 charIndex++;
-
                 let speed = 30;
-                if(
-                    lines[lineIndex].includes("Match") ||
-                    lines[lineIndex].includes("ID") ||
-                    lines[lineIndex].includes("Name")
-                ){
-                    speed = 70;
+                if(lines[lineIndex].includes("Match") || lines[lineIndex].includes("Name")){
+                    speed = 80;
                 }
-
                 setTimeout(type, speed);
             }else{
                 terminal.innerHTML += "\n";
