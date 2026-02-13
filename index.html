@@ -156,7 +156,7 @@ pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 3 à 7 inchangées pour garder ton texte original -->
+<!-- SCENES 3 à 7 inchangées -->
 <div class="scene" id="scene3">
   <p class="big">Parmi des milliards d’humains…<br>mon cœur t’a reconnu.</p>
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
@@ -306,6 +306,7 @@ function startBootSequence() {
 }
 function typeLine(){
   if(lineIndex < bootLines.length){
+    const terminal = document.getElementById("bootText"); // correction ici
     const line = bootLines[lineIndex];
     let charIndex = 0;
     function typeChar(){
@@ -321,7 +322,7 @@ function typeLine(){
     }
     typeChar();
   } else {
-    goToScene("scene2");
+    goToScene("scene2"); // passe à l’annonce d’ISSA
     currentScene = 2;
     revealName();
   }
