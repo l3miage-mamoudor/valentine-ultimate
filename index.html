@@ -26,7 +26,7 @@ input{padding:0.8rem 1rem; font-size:1rem; border-radius:5px; border:none;}
 <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
 <div id="particles"></div>
 
-<!-- Scene 0 - Password -->
+<!-- Scene 0 - Mot de passe -->
 <div class="scene active" id="scene0">
   <div style="font-family:'Playfair Display', serif; font-size:1.8rem; margin-bottom:2rem;">
     Bienvenue…<br>
@@ -38,9 +38,9 @@ input{padding:0.8rem 1rem; font-size:1rem; border-radius:5px; border:none;}
   <div id="wrongPass" style="color:#e63946; margin-top:1rem; opacity:0;">Mot de passe incorrect</div>
 </div>
 
-<!-- Scene 1 - Terminal intro -->
+<!-- Scene 1 - Terminal -->
 <div class="scene" id="scene1">
-  <div id="scene1Content" style="font-family:'Fira Mono', monospace; font-size:1.2rem; white-space:pre-line;"></div>
+  <pre id="scene1Content" style="font-family:'Fira Mono', monospace; font-size:1.2rem; white-space:pre-line;"></pre>
   <button class="button" id="btnScene1" style="margin-top:2rem; display:none;">CONTINUER</button>
 </div>
 
@@ -99,6 +99,7 @@ let forever = true;
 document.addEventListener('DOMContentLoaded', () => {
   let currentScene = 0;
   const secretPassword = "1402";
+
   const btnPassword = document.getElementById("btnPassword");
   const btnScene1 = document.getElementById("btnScene1");
   const scene1Content = document.getElementById("scene1Content");
@@ -117,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   createParticles();
 
-  // Typewriter scene 1
+  // Lignes terminal scène 1
   const linesScene1 = [
     "> Booting emotional system...",
     "> Scanning humanity database...",
@@ -145,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeChar();
   }
 
-  // Check password
+  // Mot de passe
   btnPassword.addEventListener('click', ()=>{
     const input = document.getElementById("passwordInput").value;
     if(input === secretPassword){
