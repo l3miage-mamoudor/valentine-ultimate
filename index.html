@@ -112,20 +112,7 @@ function checkPassword() {
     document.getElementById('scene0').classList.remove('active');
     currentScene = 1;
     document.getElementById('scene'+currentScene).classList.add('active');
-
-    // petit timeout pour forcer le rendu avant typewriter
-    setTimeout(() => {
-      startTypewriter(currentScene);
-      // auto-advance après la scène 1
-      if(currentScene === 1){
-        let scene = document.getElementById('scene1');
-        let elems = scene.querySelectorAll('.typewriter');
-        let totalTime = 0;
-        elems.forEach(el => totalTime += (el.dataset.text.length)*30 + 500);
-        setTimeout(()=>nextScene(), totalTime);
-      }
-    },50);
-
+    setTimeout(()=>startTypewriterSequential(currentScene), 50);
   } else {
     const error = document.getElementById("wrongPass");
     error.style.opacity = 1;
@@ -137,25 +124,30 @@ function nextScene(){
   document.getElementById('scene'+currentScene).classList.remove('active');
   currentScene++;
   document.getElementById('scene'+currentScene).classList.add('active');
-  startTypewriter(currentScene);
+  startTypewriterSequential(currentScene);
 }
 
-// Typewriter pour tous les éléments d'une scène
-function startTypewriter(sceneId){
+// Typewriter séquentiel
+function startTypewriterSequential(sceneId, index = 0) {
   const scene = document.getElementById('scene'+sceneId);
   const elems = scene.querySelectorAll('.typewriter');
-  elems.forEach(el => {
-    let text = el.dataset.text || el.textContent;
-    el.textContent = '';
-    typeWriter(el, text);
-  });
-}
+  if(index >= elems.length) return;
 
-function typeWriter(el, text, i=0){
-  if(i < text.length){
-    el.innerHTML += text.charAt(i);
-    setTimeout(()=>typeWriter(el, text, i+1), 30);
+  let el = elems[index];
+  let text = el.dataset.text || el.textContent;
+  el.textContent = '';
+  el.classList.remove('fadeSlide');
+
+  function typeChar(i=0){
+    if(i < text.length){
+      el.innerHTML += text.charAt(i);
+      setTimeout(()=>typeChar(i+1), 30);
+    } else {
+      if(el.classList.contains('fadeSlide')) el.style.opacity = 1;
+      startTypewriterSequential(sceneId, index+1);
+    }
   }
+  typeChar();
 }
 
 // Particles
