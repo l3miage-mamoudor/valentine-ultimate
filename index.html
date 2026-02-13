@@ -25,6 +25,7 @@ body {
   text-align:center;
   padding:2rem;
   flex-direction:column;
+  overflow-y:auto;
 }
 
 .scene.active { display:flex; }
@@ -265,8 +266,10 @@ let currentScene = 0;
 // Navigation entre scenes
 function goToScene(id){
   document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  if(id==='scene8') revealFinalText(); // défilement du monologue final
+  const scene = document.getElementById(id);
+  scene.classList.add("active");
+  scene.scrollTop = 0; // remet au top
+  if(id==='scene8') revealFinalText();
 }
 
 // Bouton continuer
@@ -324,7 +327,6 @@ function typeLine(){
     }
     typeChar();
   } else {
-    // ✅ Passe à scene2 avant d'animer le nom
     goToScene("scene2");
     currentScene = 2;
     revealName();
@@ -353,10 +355,6 @@ function createParticles(){
     p.style.left=Math.random()*100+'%';
     p.style.width=p.style.height=(5+Math.random()*5)+'px';
     p.style.animationDuration=(3+Math.random()*3)+'s';
-    if(Math.random()<0.2){
-      p.style.background='url(https://i.ibb.co/k9q2QZb/heart.png) no-repeat center/contain';
-      p.style.borderRadius='0';
-    }
     container.appendChild(p);
   }
 }
@@ -364,17 +362,18 @@ createParticles();
 
 // MONOLOGUE FINAL
 function revealFinalText(){
-  const paragraphs = document.querySelectorAll('#scene8 p');
+  const scene = document.getElementById('scene8');
+  const paragraphs = Array.from(scene.querySelectorAll('p'))
+                          .filter(p => p.textContent.trim().length > 0);
   let delay = 0;
   paragraphs.forEach(p => {
-    if(!p.classList.contains('pause')){ // Ignore les pauses
-      p.style.opacity = 0;
-      setTimeout(()=>{
-        p.style.transition = 'opacity 1s';
-        p.style.opacity = 1;
-      }, delay);
-      delay += 1500; // 1,5s entre chaque phrase
-    }
+    p.style.opacity = 0;
+    setTimeout(()=>{
+      p.style.transition = 'opacity 1s';
+      p.style.opacity = 1;
+      p.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, delay);
+    delay += 1500;
   });
 }
 
