@@ -66,7 +66,7 @@ button{
     <input type="password" id="password">
     <br>
     <button onclick="checkPassword()">Valider</button>
-    <p id="hint" style="margin-top:20px;color:#aaa;">
+    <p style="margin-top:20px;color:#aaa;">
         Indice : le mot de passe est une combinaison de ton prénom et du mien… 8 lettres.
     </p>
     <p id="error" style="color:red;"></p>
@@ -80,7 +80,7 @@ button{
 
 <!-- SCENE 2 -->
 <div class="scene" id="scene2">
-    <h2>Anomalie détectée :</h2>
+    <h2>Match détecté :</h2>
     <h1 class="red big">ISSA</h1>
     <button onclick="nextScene()">CONTINUER</button>
 </div>
@@ -88,8 +88,11 @@ button{
 <!-- SCENE 3 -->
 <div class="scene" id="scene3">
     <p class="big">
-        Parmi des milliards d’humains…  
-        mon cœur t’a reconnu.
+        Ce programme n’a pas été développé pour tout le monde.
+        <br><br>
+        Il a été créé pour une seule personne.
+        <br><br>
+        <span class="red">Toi.</span>
     </p>
     <button onclick="nextScene()">CONTINUER</button>
 </div>
@@ -97,13 +100,13 @@ button{
 <!-- SCENE 4 -->
 <div class="scene" id="scene4">
     <p class="big">
-        Même quand les gens sont lourds…  
-        ils te regardent avec les mêmes yeux.
+        Parmi des milliards d’humains…  
+        mon cœur t’a reconnu.
     </p>
     <p>
-        Moi je te regarde avec admiration.  
-        Avec douceur.  
-        Avec amour.
+        Pas par hasard.  
+        Pas par erreur.  
+        Mais comme une évidence.
     </p>
     <button onclick="nextScene()">CONTINUER</button>
 </div>
@@ -111,11 +114,10 @@ button{
 <!-- SCENE 5 -->
 <div class="scene" id="scene5">
     <div class="final">
-        Tu es spécial pour moi.  
-        Bien plus que tu ne l’imagines.
+        Même quand les jours sont lourds…  
+        je te regarde toujours avec les mêmes yeux.
         <br><br>
-        Et si je devais recommencer mille fois…  
-        je te choisirais encore.
+        Tu es devenu essentiel.
         <br><br>
         <span class="heart">❤</span>
         <br><br>
@@ -151,10 +153,23 @@ function checkPassword(){
 
 function startTypewriter(){
     const lines = [
-        "> Initialisation du système émotionnel...",
-        "> Analyse des 8 042 311 447 humains...",
-        "> Recherche d’anomalie exceptionnelle...",
-        "> Résultat trouvé."
+        "> Booting emotional system...",
+        "> Synchronizing heartbeat...",
+        "> Accessing heart memory...",
+        "> Scanning 8 042 311 447 humans...",
+        "> Searching for:",
+        ">   - rare kindness",
+        ">   - quiet strength",
+        ">   - softness behind confidence",
+        ">   - the one who feels like home...",
+        "> Filtering noise...",
+        "> Eliminating distractions...",
+        "> Cross-referencing soul data...",
+        "> ...",
+        "> ...",
+        "> Match found.",
+        "> ID: 0001",
+        "> Name: ISSA"
     ];
 
     const terminal = document.getElementById("terminal");
@@ -167,7 +182,19 @@ function startTypewriter(){
             if(charIndex < lines[lineIndex].length){
                 terminal.innerHTML += lines[lineIndex][charIndex];
                 charIndex++;
-                setTimeout(type, 30);
+
+                let speed = 30;
+
+                if(
+                    lines[lineIndex].includes("Match") ||
+                    lines[lineIndex].includes("ID") ||
+                    lines[lineIndex].includes("Name")
+                ){
+                    speed = 70;
+                }
+
+                setTimeout(type, speed);
+
             }else{
                 terminal.innerHTML += "\n";
                 lineIndex++;
