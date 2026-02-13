@@ -12,20 +12,19 @@ body {
   background: radial-gradient(circle at center, #1a1a1a, #000);
   color:white;
   font-family:'Fira Mono', monospace;
-  overflow:hidden;
+  overflow-x:hidden;
   text-align:center;
 }
 
 .scene {
   display:none;
-  height:100vh;
+  min-height:100vh;
   width:100%;
   justify-content:center;
   align-items:center;
   text-align:center;
   padding:2rem;
   flex-direction:column;
-  overflow-y:auto;
 }
 
 .scene.active { display:flex; }
@@ -111,7 +110,6 @@ pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
 }
 #muteBtn:hover { background: #f56570; }
 
-/* Annonce ISSA */
 #revealedName span {
   display:inline-block;
   transform:scale(0);
@@ -122,6 +120,11 @@ pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
   0%{transform:scale(0);opacity:0;}
   60%{transform:scale(1.3);opacity:1;}
   100%{transform:scale(1);}
+}
+
+.scene.final {
+  justify-content:flex-start;
+  padding-top:3rem;
 }
 </style>
 </head>
@@ -153,20 +156,16 @@ pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 3: CŒUR CHOISI -->
+<!-- SCENE 3 à 7 inchangées pour garder ton texte original -->
 <div class="scene" id="scene3">
   <p class="big">Parmi des milliards d’humains…<br>mon cœur t’a reconnu.</p>
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
 </div>
-
-<!-- SCENE 4: REGARD AMOUREUX -->
 <div class="scene" id="scene4">
   <p class="big">Même quand les gens sont lourds…<br>ils te regardent avec les mêmes yeux.</p>
   <p>Moi je te regarde avec admiration.<br>Avec douceur.<br>Avec amour.</p>
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
 </div>
-
-<!-- SCENE 5: DÉCLARATION -->
 <div class="scene" id="scene5">
   <div class="final">
     Tu es spécial pour moi.<br>Bien plus que tu ne l’imagines.<br><br>
@@ -176,8 +175,6 @@ pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
   </div>
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
 </div>
-
-<!-- SCENE 6: CODE -->
 <div class="scene" id="scene6">
   <pre class="big">
 if (life.getHard()) {
@@ -189,8 +186,6 @@ let forever = true;
   </pre>
   <button class="pulse" onclick="nextScene()">CONTINUER</button>
 </div>
-
-<!-- SCENE 7: ALGO -->
 <div class="scene" id="scene7">
   <div class="big">
     Si l’amour était un algorithme,<br>
@@ -266,9 +261,8 @@ let currentScene = 0;
 // Navigation entre scenes
 function goToScene(id){
   document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
-  const scene = document.getElementById(id);
-  scene.classList.add("active");
-  scene.scrollTop = 0; // remet au top
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0); // scroll global vers le top
   if(id==='scene8') revealFinalText();
 }
 
@@ -315,12 +309,12 @@ function typeLine(){
     const line = bootLines[lineIndex];
     let charIndex = 0;
     function typeChar(){
-      document.getElementById("bootText").innerHTML += line.charAt(charIndex);
+      terminal.innerHTML += line.charAt(charIndex);
       charIndex++;
       if(charIndex < line.length){
         setTimeout(typeChar, 20 + Math.random()*40);
       } else {
-        document.getElementById("bootText").innerHTML += "\n";
+        terminal.innerHTML += "\n";
         lineIndex++;
         setTimeout(typeLine, 300);
       }
@@ -371,7 +365,6 @@ function revealFinalText(){
     setTimeout(()=>{
       p.style.transition = 'opacity 1s';
       p.style.opacity = 1;
-      p.scrollIntoView({behavior: 'smooth', block: 'center'});
     }, delay);
     delay += 1500;
   });
