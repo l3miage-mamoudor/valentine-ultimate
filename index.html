@@ -6,93 +6,29 @@
 <title>The One - Valentine Ultimate</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Fira+Mono&display=swap');
-
-body {
-  margin:0;
-  background: radial-gradient(circle at center, #1a1a1a, #000);
-  color:white;
-  font-family:'Fira Mono', monospace;
-  overflow:hidden;
-  text-align:center;
-}
-
-.scene {
-  display:none;
-  height:100vh;
-  width:100%;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:2rem;
-  flex-direction:column;
-}
-
-.scene.active { display:flex; }
-
-input {
-  padding:12px;
-  font-size:1rem;
-  border:none;
-  border-radius:5px;
-  margin-top:1rem;
-  outline:none;
-}
-
-button {
-  margin-top:20px;
-  padding:12px 30px;
-  border:none;
-  background:#e63946;
-  color:white;
-  font-family:'Playfair Display', serif;
-  font-size:1.1rem;
-  cursor:pointer;
-  border-radius:5px;
-  transition:0.3s;
-}
-
-button:hover { background:#f56570; }
-
-.hint { margin-top:2rem; font-size:0.9rem; opacity:0.6; }
-#error { color:#ff4d6d; margin-top:1rem; }
-
-.terminal-box {
-  background:#000;
-  padding:30px;
-  border-radius:10px;
-  box-shadow:0 0 30px rgba(255,255,255,0.1);
-  width:80%;
-  max-width:700px;
-}
-
-pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
-
-.red { color:#e63946; font-family:'Playfair Display', serif; font-size:3rem; margin-top:1rem; animation:beat 1s infinite alternate; }
-@keyframes beat {0%{transform:scale(1);}100%{transform:scale(1.2);} }
-
-.big { font-size:1.6rem; line-height:1.6; margin:1rem 0; }
-
-.final {
-  font-family:'Playfair Display', serif;
-  font-size:1.6rem;
-  line-height:1.8;
-  max-width:800px;
-  margin:2rem auto;
-  text-align:center;
-}
-
-.pause { margin-top:0.5rem; }
-
-.impact { font-weight:700; margin-top:0.5rem; font-size:1.8rem; color:#e63946; }
-
-.final-line { font-weight:700; font-size:1.7rem; margin-top:0.5rem; }
-
-.signature { margin-top:1.5rem; font-style:italic; opacity:0.7; }
-
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0a0a0a;color:#fff;font-family:'Fira Mono', monospace;overflow:hidden;}
+.scene{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;opacity:0;transition:opacity 0.5s ease;padding:0 20px;}
+.active{opacity:1;}
+.fadeSlide{opacity:0; transform:translateY(30px); animation:fadeSlide 1s forwards;}
+@keyframes fadeSlide{to{opacity:1; transform:translateY(0);}}
+.red{color:#e63946;}
+.heart{color:#e63946;font-size:3rem;animation:beat 1s infinite alternate;}
+@keyframes beat{0%{transform:scale(1);}100%{transform:scale(1.2);}}
+.button{margin-top:2rem;padding:0.8rem 2rem;border:none;background:#e63946;color:#fff;font-family:'Playfair Display', serif;font-size:1.1rem;cursor:pointer;border-radius:5px;transition:0.3s;}
+.button:hover{background:#f56570;}
 #particles{position:absolute;width:100%;height:100%;pointer-events:none;overflow:hidden;}
 .particle{position:absolute;width:10px;height:10px;background:#e63946;border-radius:50%;opacity:0.8;animation:float 5s linear infinite;}
 @keyframes float{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}}
-
+input{padding:0.8rem 1rem; font-size:1rem; border-radius:5px; border:none;}
+.typewriter{font-family:'Fira Mono', monospace; font-size:1.2rem; text-align:center; white-space:pre-wrap;}
+.big{font-size:1.4rem; line-height:1.6;}
+.final{font-size:1.2rem; line-height:1.6;}
+.slow p{margin-bottom:0.8rem;}
+.pause{height:1rem;}
+.impact{font-weight:bold; font-size:1.3rem; margin-bottom:0.5rem;}
+.final-line{margin-bottom:0.3rem;}
+.signature{margin-top:1rem; font-family:'Playfair Display', serif; font-size:1.3rem; opacity:0.9;}
 </style>
 </head>
 <body>
@@ -100,55 +36,66 @@ pre { color:#00ff88; font-family:monospace; font-size:1.1rem; text-align:left; }
 <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
 <div id="particles"></div>
 
-<!-- SCENE 0 -->
+<!-- Scene 0 - Password -->
 <div class="scene active" id="scene0">
-  <h1>Bienvenue…<br>Pour accéder à ton expérience spéciale Saint-Valentin,<br>entre le mot de passe secret :</h1>
+  <div style="font-family:'Playfair Display', serif; font-size:1.8rem; margin-bottom:2rem;">
+    Bienvenue…<br> 
+    Pour accéder à ton expérience spéciale Saint-Valentin,<br>
+    entre le mot de passe secret :
+  </div>
   <input type="password" id="passwordInput" placeholder="💖 Mot de passe 💖">
-  <button onclick="checkPassword()">Entrer</button>
-  <p class="hint">Indice : combinaison de ton prénom et du mien. 8 lettres.</p>
-  <p id="error"></p>
+  <button class="button" onclick="checkPassword()">Valider</button>
+  <div id="wrongPass" style="color:#e63946; margin-top:1rem; opacity:0;">Mot de passe incorrect</div>
+  <p style="margin-top:1rem; color:#aaa;">Indice : le mot de passe est une combinaison de ton prénom et du mien… 8 lettres.</p>
 </div>
 
-<!-- SCENE 1: TERMINAL -->
+<!-- Scene 1 - Terminal intro -->
 <div class="scene" id="scene1">
-  <div class="terminal-box">
-    <pre id="bootText"></pre>
-  </div>
+  <div class="typewriter" data-text="> Booting emotional system..."></div>
+  <div class="typewriter" data-text="> Accessing heart memory..."></div>
+  <div class="typewriter" data-text="> Scanning 8 042 311 447 humans..."></div>
+  <div class="typewriter" data-text="> Searching for:"></div>
+  <div class="typewriter" data-text="> - kindness"></div>
+  <div class="typewriter" data-text="> - strength"></div>
+  <div class="typewriter" data-text="> - softness"></div>
+  <div class="typewriter" data-text="> - the one who feels like home..."></div>
+  <div class="typewriter" data-text="> Processing results..."></div>
+  <div class="typewriter" data-text="> Match found."></div>
+  <button class="button" style="display:none;" id="btn1" onclick="nextScene()">VOIR LE RÉSULTAT</button>
 </div>
 
-<!-- SCENE 2: NOM -->
+<!-- Scene 2 -->
 <div class="scene" id="scene2">
-  <div class="red" id="revealedName">ISSA</div>
-  <button onclick="nextScene()">CONTINUER</button>
+  <div class="typewriter red big">ISSA</div>
+  <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 3: CŒUR CHOISI -->
+<!-- Scene 3 -->
 <div class="scene" id="scene3">
-  <p class="big">Parmi des milliards d’humains…<br>mon cœur t’a reconnu.</p>
-  <button onclick="nextScene()">CONTINUER</button>
+  <p class="big">Parmi des milliards d’humains… mon cœur t’a reconnu.</p>
+  <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 4: REGARD AMOUREUX -->
+<!-- Scene 4 -->
 <div class="scene" id="scene4">
-  <p class="big">Même quand les gens sont lourds…<br>ils te regardent avec les mêmes yeux.</p>
-  <p>Moi je te regarde avec admiration.<br>Avec douceur.<br>Avec amour.</p>
-  <button onclick="nextScene()">CONTINUER</button>
+  <p class="big">Même quand les gens sont lourds… ils te regardent avec les mêmes yeux.</p>
+  <p>Moi je te regarde avec admiration. Avec douceur. Avec amour.</p>
+  <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 5: DÉCLARATION -->
+<!-- Scene 5 -->
 <div class="scene" id="scene5">
-  <div class="final">
-    Tu es spécial pour moi.<br>Bien plus que tu ne l’imagines.<br><br>
-    Et si je devais recommencer mille fois…<br>je te choisirais encore.<br><br>
-    <span class="red">❤</span><br><br>
-    Je t’aime, ISSA.
+  <div class="typewriter big">
+    Ce n’est pas juste la Saint-Valentin. C’est le jour où je te rappelle que tu comptes. 
+    Que tu es devenu essentiel. Et que je t’aime. Beaucoup. Beaucoup. Beaucoup.
   </div>
-  <button onclick="nextScene()">CONTINUER</button>
+  <span class="heart">❤️❤️❤️</span>
+  <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 6: CODE -->
+<!-- Scene 6 - Code style -->
 <div class="scene" id="scene6">
-  <pre class="big">
+  <pre class="typewriter big">
 if (life.getHard()) {
     remember("You are loved.");
 }
@@ -156,23 +103,21 @@ if (life.getHard()) {
 const myChoice = "You";
 let forever = true;
   </pre>
-  <button onclick="nextScene()">CONTINUER</button>
+  <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 7: ALGO -->
+<!-- Scene 7 - Algo style -->
 <div class="scene" id="scene7">
-  <div class="big">
-    Si l’amour était un algorithme,<br>
-    tu serais la seule valeur non remplaçable.<br><br>
-    Peu importe les mises à jour de la vie,<br>
-    tu resteras ma version préférée.
+  <div class="typewriter big">
+Si l’amour était un algorithme, tu serais la seule valeur non remplaçable. Peu importe les mises à jour de la vie, tu resteras ma version préférée.
   </div>
-  <button onclick="nextScene()">CONTINUER</button>
+  <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
-<!-- SCENE 8: MONOLOGUE FINAL -->
+<!-- Scene 8 - Finale -->
 <div class="scene final" id="scene8">
-  <div class="final">
+  <div class="monologue big slow">
+
     <p>Tu sais ce qui est fou ?</p>
     <p>Je ne t’attendais pas.</p>
     <p>Je ne cherchais pas quelqu’un.</p>
@@ -226,88 +171,88 @@ let forever = true;
     <p class="final-line">sache qu’aujourd’hui,</p>
     <p class="final-line">je te choisis.</p>
     <p class="signature">— ROUMISSA</p>
+    <p class="final-line" style="margin-top:2rem; font-size:1.5rem;">Joyeuse Saint-Valentin 💖</p>
+    <p class="final-line" style="margin-top:0.5rem; font-size:1.3rem; opacity:0.7;">Fin</p>
   </div>
 </div>
 
 <script>
 let currentScene = 0;
+const secretPassword = "ROUMISSA";
 
-function goToScene(id){
-  document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+function showScene(id){
+    document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 }
 
 function nextScene(){
-  currentScene++;
-  goToScene("scene"+currentScene);
+    currentScene++;
+    showScene("scene"+currentScene);
 }
 
-// MOT DE PASSE
-function checkPassword() {
-  const input = document.getElementById("passwordInput").value.toUpperCase();
-  if(input === "ROUMISSA"){
-    currentScene = 1;
-    goToScene("scene1");
-    startBootSequence();
-  } else {
-    document.getElementById("error").innerText = "Mot de passe incorrect…";
-  }
+function checkPassword(){
+    const input = document.getElementById("passwordInput").value.toUpperCase();
+    if(input === secretPassword){
+        currentScene = 1;
+        showScene("scene1");
+        startTypewriter();
+    } else {
+        const error = document.getElementById("wrongPass");
+        error.style.opacity = 1;
+        setTimeout(()=>{error.style.opacity=0;},2000);
+    }
 }
 
-// TERMINAL
-const bootLines = [
-  "> Booting emotional system...",
-  "> Accessing heart memory...",
-  "> Scanning 8 042 311 447 humans...",
-  "> Searching for:",
-  "> - kindness",
-  "> - strength",
-  "> - softness",
-  "> - the one who feels like home...",
-  "> Processing results...",
-  "> Match found."
-];
-let lineIndex = 0;
-function startBootSequence() {
-  const terminal = document.getElementById("bootText");
-  terminal.innerHTML = "";
-  lineIndex = 0;
-  typeLine();
-}
-function typeLine(){
-  if(lineIndex < bootLines.length){
-    const line = bootLines[lineIndex];
+function startTypewriter(){
+    const lines = [
+        "> Booting emotional system...",
+        "> Accessing heart memory...",
+        "> Scanning 8 042 311 447 humans...",
+        "> Searching for:",
+        "> - kindness",
+        "> - strength",
+        "> - softness",
+        "> - the one who feels like home...",
+        "> Processing results...",
+        "> Match found."
+    ];
+    const terminal = document.getElementById("terminal");
+    terminal.innerHTML = "";
+    let lineIndex = 0;
     let charIndex = 0;
-    const interval = setInterval(()=>{
-      document.getElementById("bootText").innerHTML += line.charAt(charIndex);
-      charIndex++;
-      if(charIndex === line.length){
-        clearInterval(interval);
-        document.getElementById("bootText").innerHTML += "\n";
-        lineIndex++;
-        setTimeout(typeLine, 300);
-      }
-    },30);
-  } else {
-    setTimeout(()=>goToScene("scene2"), 500);
-    currentScene = 2;
-  }
+
+    function type(){
+        if(lineIndex < lines.length){
+            if(charIndex < lines[lineIndex].length){
+                terminal.innerHTML += lines[lineIndex][charIndex];
+                charIndex++;
+                setTimeout(type,30);
+            } else {
+                terminal.innerHTML += "\n";
+                lineIndex++;
+                charIndex = 0;
+                setTimeout(type, 300);
+            }
+        } else {
+            document.getElementById("btn1").style.display = "inline-block";
+        }
+    }
+    type();
 }
 
-// PARTICLES
+// Particles
 function createParticles(){
-  const container=document.getElementById('particles');
-  for(let i=0;i<70;i++){
-    let p=document.createElement('div');
-    p.classList.add('particle');
-    p.style.left=Math.random()*100+'%';
-    p.style.width=p.style.height=(5+Math.random()*5)+'px';
-    p.style.animationDuration=(3+Math.random()*3)+'s';
-    container.appendChild(p);
-  }
+    const container=document.getElementById('particles');
+    for(let i=0;i<70;i++){
+        let p=document.createElement('div');
+        p.classList.add('particle');
+        p.style.left=Math.random()*100+'%';
+        p.style.width=p.style.height=(5+Math.random()*5)+'px';
+        p.style.animationDuration=(3+Math.random()*3)+'s';
+        container.appendChild(p);
+    }
 }
 createParticles();
 </script>
-
 </body>
 </html>
