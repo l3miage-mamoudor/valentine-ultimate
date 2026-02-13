@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Fira+Mono&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0a0a0a;color:#fff;font-family:'Fira Mono', monospace;overflow:hidden;}
-.scene{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;opacity:0;transition:opacity 0.5s ease;}
+.scene{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;opacity:0;transition:opacity 0.5s ease;min-height:100vh;}
 .active{opacity:1;}
 .red{color:#e63946;}
 .heart{color:#e63946;font-size:3rem;animation:beat 1s infinite alternate;}
@@ -19,6 +19,7 @@ body{background:#0a0a0a;color:#fff;font-family:'Fira Mono', monospace;overflow:h
 .particle{position:absolute;width:10px;height:10px;background:#e63946;border-radius:50%;opacity:0.8;animation:float 5s linear infinite;}
 @keyframes float{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}}
 input{padding:0.8rem 1rem; font-size:1rem; border-radius:5px; border:none;}
+pre{white-space:pre-wrap;}
 </style>
 </head>
 <body>
@@ -40,7 +41,7 @@ input{padding:0.8rem 1rem; font-size:1rem; border-radius:5px; border:none;}
 
 <!-- Scene 1 - Terminal -->
 <div class="scene" id="scene1">
-  <pre id="scene1Content" style="font-family:'Fira Mono', monospace; font-size:1.2rem; white-space:pre-line;"></pre>
+  <pre id="scene1Content" style="font-family:'Fira Mono', monospace; font-size:1.2rem;"></pre>
   <button class="button" id="btnScene1" style="margin-top:2rem; display:none;">CONTINUER</button>
 </div>
 
@@ -53,13 +54,17 @@ input{padding:0.8rem 1rem; font-size:1rem; border-radius:5px; border:none;}
 
 <!-- Scene 3 -->
 <div class="scene" id="scene3">
-  <div style="font-family:'Playfair Display', serif; font-size:1.5rem; margin-bottom:1rem;">Parmi des milliards, mon cœur t’a reconnu. Pas par hasard. Pas par erreur. Mais comme une évidence.</div>
+  <div style="font-family:'Playfair Display', serif; font-size:1.5rem; margin-bottom:1rem;">
+    Parmi des milliards, mon cœur t’a reconnu.<br>Pas par hasard. Pas par erreur. Mais comme une évidence.
+  </div>
   <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
 <!-- Scene 4 -->
 <div class="scene" id="scene4">
-  <div style="font-family:'Playfair Display', serif; font-size:1.5rem; margin-bottom:1rem;">Même quand les jours sont lourds, je te regarde toujours avec les mêmes yeux.</div>
+  <div style="font-family:'Playfair Display', serif; font-size:1.5rem; margin-bottom:1rem;">
+    Même quand les jours sont lourds, je te regarde toujours avec les mêmes yeux.
+  </div>
   <button class="button" onclick="nextScene()">CONTINUER</button>
 </div>
 
